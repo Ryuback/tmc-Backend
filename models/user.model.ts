@@ -1,4 +1,4 @@
-import { Entity } from './entity.mode';
+import { Entity } from './entity.model';
 
 export class User extends Entity {
   fullName: string;

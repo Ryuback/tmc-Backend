@@ -3,6 +3,7 @@ import * as mongoose from 'mongoose';
 import { apiEnv } from '../../enviroments/api-env';
 import { userModelProvider } from './model/user.mongo';
 import { configsModelProvider } from '../../models/config.mongo';
+import { classModelProvider } from './model/class.mongo';
 
 export const databaseProvider = {
   provide: 'MONGO_CONNECTION',
@@ -27,7 +28,8 @@ export const databaseProvider = {
 const providers = [
   databaseProvider,
   configsModelProvider,
-  userModelProvider
+  userModelProvider,
+  classModelProvider
 ];
 
 @Module({

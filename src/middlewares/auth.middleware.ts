@@ -2,7 +2,7 @@ import { HttpException, HttpStatus, Injectable, NestMiddleware } from '@nestjs/c
 import * as fbAdmin from 'firebase-admin';
 import { apiEnv } from '../../enviroments/api-env';
 import { User } from '../../models/user.model';
-import { UserService } from '../user/user.service';
+import { UserService } from '../controllers/user/user.service';
 
 interface IAuthContext {
   user: User;

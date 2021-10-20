@@ -1,7 +1,7 @@
 import { Controller, Get } from '@nestjs/common';
 import { UserService } from './user.service';
-import { AuthUser } from '../auth/auth-user.decorator';
-import { User } from '../../models/user.model';
+import { AuthUser } from '../../auth/auth-user.decorator';
+import { User } from '../../../models/user.model';
 
 @Controller('user')
 export class UserController {

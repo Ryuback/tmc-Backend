@@ -1,14 +1,15 @@
 import { MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { UserController } from './user/user.controller';
+import { UserController } from './controllers/user/user.controller';
 import { AuthMiddleware } from './middlewares/auth.middleware';
 import { DatabaseModule } from './database/database.module';
-import { UserService } from './user/user.service';
+import { UserService } from './controllers/user/user.service';
+import { ClassController } from './controllers/class/class.controller';
 
 @Module({
   imports: [DatabaseModule],
-  controllers: [AppController, UserController],
+  controllers: [AppController, UserController, ClassController],
   providers: [AppService, UserService]
 })
 export class AppModule implements NestModule {
