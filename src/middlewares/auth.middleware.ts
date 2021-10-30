@@ -46,7 +46,6 @@ export class AuthMiddleware implements NestMiddleware {
       console.log('FirebaseMiddleware: creating new user:', idToken.uid);
       const givenName = (idToken.name || '').split(' ')[0];
       user = await this.userService.create(idToken.uid, idToken.name, givenName, idToken.email, idToken.email_verified);
-      // await this.spaceService.create(user, UsagePlanId.TRIAL);
     }
     return user;
   }

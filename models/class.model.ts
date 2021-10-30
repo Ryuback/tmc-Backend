@@ -5,4 +5,5 @@ export interface Class extends Entity {
   name: string;
   description: string;
   tasks: Task[];
+  ownerId: string;
 }
