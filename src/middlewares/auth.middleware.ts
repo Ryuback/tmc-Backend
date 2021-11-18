@@ -41,11 +41,12 @@ export class AuthMiddleware implements NestMiddleware {
   }
 
   private async getOrCreateUser(idToken: fbAdmin.auth.DecodedIdToken): Promise<User> {
+    // console.log(idToken);
     let user: User = await this.userService.findById(idToken.uid);
     if (!user) {
-      console.log('FirebaseMiddleware: creating new user:', idToken.uid);
+      // console.log('FirebaseMiddleware: creating new user:', idToken.uid);
       const givenName = (idToken.name || '').split(' ')[0];
-      user = await this.userService.create(idToken.uid, idToken.name, givenName, idToken.email, idToken.email_verified);
+      user = await this.userService.create(idToken.uid, idToken.name, givenName, idToken.picture, idToken.email, idToken.email_verified);
     }
     return user;
   }

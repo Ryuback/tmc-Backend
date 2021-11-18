@@ -5,6 +5,7 @@ export class User extends Entity {
   givenName: string;
   email: string;
   emailVerified: boolean;
+  imageUrl: string;
   showWelcomeWizard: boolean;
   language?: string;
 }

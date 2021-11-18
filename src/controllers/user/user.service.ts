@@ -12,12 +12,19 @@ export class UserService {
   async create(_id: string,
                fullName: string,
                givenName: string,
+               imageUrl: string,
                email: string,
                emailVerified: boolean): Promise<User> {
+
+    if (!fullName) {
+      fullName = '';
+    }
+
     const user: User = {
       _id,
       fullName,
       givenName,
+      imageUrl,
       email,
       emailVerified,
       showWelcomeWizard: true
