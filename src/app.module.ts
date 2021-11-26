@@ -6,10 +6,11 @@ import { AuthMiddleware } from './middlewares/auth.middleware';
 import { DatabaseModule } from './database/database.module';
 import { UserService } from './controllers/user/user.service';
 import { ClassController } from './controllers/class/class.controller';
+import { TaskController } from './controllers/task/task.controller';
 
 @Module({
   imports: [DatabaseModule],
-  controllers: [AppController, UserController, ClassController],
+  controllers: [AppController, UserController, ClassController, TaskController],
   providers: [AppService, UserService]
 })
 export class AppModule implements NestModule {

@@ -25,7 +25,8 @@ export class UserController {
       { _id: user._id },
       {
         fullName: body.fullName,
-        givenName: body.givenName
+        givenName: body.givenName,
+        imageUrl: null
       }).exec();
   }
 }
