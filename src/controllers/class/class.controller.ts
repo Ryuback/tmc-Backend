@@ -52,4 +52,37 @@ export class ClassController {
       }).exec();
   }
 
+  @Post('dailyCall')
+  async dailyCall(@AuthUser() user: User,
+                  @Query('classId') classId: string,
+                  @Body() body: { userId: string, isChecked }[]) {
+    console.log(classId);
+
+    console.log(body);
+    for (const v of body) {
+      await this.classModel.updateOne({ _id: classId, 'collaborations.userId': v.userId },
+        {
+          $inc: {
+            'collaborations.$.absent': 1
+          }
+        }, { multi: true }).exec();
+    }
+  }
+
+  @Post('addQuality')
+  async addQuality(@AuthUser() user: User,
+                   @Query('classId') classId: string,
+                   @Body() body: { studentId: string, quality }) {
+
+    return this.classModel.updateOne({
+        _id: classId,
+        'collaborations.userId': body.studentId
+      },
+      {
+        $inc: {
+          'collaborations.$.qualities.$[qualities].count': 1
+        }
+      }, { arrayFilters: [{ 'qualities.name': body.quality }], upsert: true }).exec();
+  }
+
 }
