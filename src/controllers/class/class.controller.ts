@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpException, Inject, Post, Query } from '@nestjs/common';
+import { Body, Controller, Get, HttpException, Inject, Post, Query, Patch } from '@nestjs/common';
 import { AuthUser } from '../../auth/auth-user.decorator';
 import { User } from '../../../models/user.model';
 import { Class } from '../../../models/class.model';
@@ -83,6 +83,13 @@ export class ClassController {
           'collaborations.$.qualities.$[qualities].count': 1
         }
       }, { arrayFilters: [{ 'qualities.name': body.quality }], upsert: true }).exec();
+  }
+
+  @Patch()
+  async updateClass(@AuthUser() user: User,
+                    @Query('classId') classId: string,
+                    @Body() body: { studentId: string, quality }) {
+    //
   }
 
 }
