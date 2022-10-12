@@ -1,6 +1,7 @@
-import { Entity } from './entity.model';
+import { Entity } from '../entity.model';
 
 export interface Comment {
+  userPhoto: string;
   userFullName: string;
   comment: string;
 }

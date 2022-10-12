@@ -1,5 +1,5 @@
 import { Entity } from './entity.model';
-import { Task } from './task.model';
+import { Task } from './task/task.model';
 import { Collaboration } from './collaboration.model';
 
 export interface Class extends Entity {

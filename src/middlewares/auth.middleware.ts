@@ -1,4 +1,9 @@
-import { HttpException, HttpStatus, Injectable, NestMiddleware } from '@nestjs/common';
+import {
+  HttpException,
+  HttpStatus,
+  Injectable,
+  NestMiddleware,
+} from '@nestjs/common';
 import * as fbAdmin from 'firebase-admin';
 import { apiEnv } from '../../enviroments/api-env';
 import { User } from '../../models/user.model';
@@ -10,14 +15,13 @@ interface IAuthContext {
 
 @Injectable()
 export class AuthMiddleware implements NestMiddleware {
-
   private fbAdminApp: fbAdmin.app.App;
   private unitTest = process.env.UNIT_TEST;
 
   constructor(private userService: UserService) {
     if (!this.unitTest) {
       this.fbAdminApp = fbAdmin.initializeApp({
-        projectId: apiEnv.firebase.projectId
+        projectId: apiEnv.firebase.projectId,
       });
     }
   }
@@ -26,9 +30,10 @@ export class AuthMiddleware implements NestMiddleware {
     const token = req.headers.authorization;
     let idToken: fbAdmin.auth.DecodedIdToken;
     if (token != null && token != '') {
-      idToken = await this.fbAdminApp.auth()
+      idToken = await this.fbAdminApp
+        .auth()
         .verifyIdToken(token.substr(7)) // 'Bearer ...'
-        .catch(err => {
+        .catch((err) => {
           console.log('#> FirebaseMiddleware.invalid-token:', err.errorInfo);
           throw new HttpException('Invalid token', HttpStatus.UNAUTHORIZED);
         });
@@ -40,13 +45,22 @@ export class AuthMiddleware implements NestMiddleware {
     return next();
   }
 
-  private async getOrCreateUser(idToken: fbAdmin.auth.DecodedIdToken): Promise<User> {
+  private async getOrCreateUser(
+    idToken: fbAdmin.auth.DecodedIdToken,
+  ): Promise<User> {
     // console.log(idToken);
     let user: User = await this.userService.findById(idToken.uid);
     if (!user) {
       // console.log('FirebaseMiddleware: creating new user:', idToken.uid);
       const givenName = (idToken.name || '').split(' ')[0];
-      user = await this.userService.create(idToken.uid, idToken.name, givenName, idToken.picture, idToken.email, idToken.email_verified);
+      user = await this.userService.create(
+        idToken.uid,
+        idToken.name,
+        givenName,
+        idToken.picture,
+        idToken.email,
+        idToken.email_verified,
+      );
     }
     return user;
   }

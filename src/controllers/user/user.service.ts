@@ -5,17 +5,16 @@ import { User } from '../../../models/user.model';
 
 @Injectable()
 export class UserService {
+  constructor(@Inject(USER_MODEL) private model: Model<UserDocument>) {}
 
-  constructor(@Inject(USER_MODEL) private model: Model<UserDocument>) {
-  }
-
-  async create(_id: string,
-               fullName: string,
-               givenName: string,
-               imageUrl: string,
-               email: string,
-               emailVerified: boolean): Promise<User> {
-
+  async create(
+    _id: string,
+    fullName: string,
+    givenName: string,
+    imageUrl: string,
+    email: string,
+    emailVerified: boolean,
+  ): Promise<User> {
     if (!fullName) {
       fullName = '';
     }
@@ -27,10 +26,10 @@ export class UserService {
       imageUrl,
       email,
       emailVerified,
-      showWelcomeWizard: true
+      showWelcomeWizard: true,
       // language: 'en' //TODO: configurar dinamicamente
     };
-    await (new this.model(user)).save();
+    await new this.model(user).save();
     console.log('#> UserService.createUser', user);
     return user;
   }
