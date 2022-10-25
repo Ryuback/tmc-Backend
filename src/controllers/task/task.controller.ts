@@ -117,6 +117,22 @@ export class TaskController {
       .exec();
   }
 
+  @Get(':id/acceptGroup/:groupId')
+  async acceptGroup(@AuthUser() user: User, @Param('id') id: string, @Param('groupId') groupId: string) {
+    const res = await this.classModel
+      .updateOne(
+        { 'tasks._id': id,
+          'tasks.groups._id': groupId},
+        {
+          $set: {
+            'tasks.$[].groups.$[group].accepted': true
+          },
+        },
+        { arrayFilters: [{'group._id': groupId }]}
+      )
+      .exec();
+  }
+
   @Post(':id/manyGroups')
   async createManyGroup(@AuthUser() user: User, @Body() groups: any, @Param('id') id: string) {
     await this.classModel
